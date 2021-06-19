@@ -10,10 +10,11 @@ import 'leaflet/dist/leaflet.css';
 import DatePicker from "react-datepicker";
 import Switch from '@material-ui/core/Switch';
 import "react-datepicker/dist/react-datepicker.css";
-
+import Select from 'react-select'
 
 function Dashboard() {
-
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
   const [data, setData] = React.useState([
     {
       "product": "type1",
@@ -148,12 +149,12 @@ function Dashboard() {
       "forecast": "TRUE"
     }
   ]);
-
+  const [productOptions, setProductOptions] = React.useState([{ value: "product 1", label: "product 1" }, { value: "product 2", label: "product 2" }])
 
   React.useEffect(() => {
 
-    for(let i=0;i<data.length;i++){
-      
+    for (let i = 0; i < data.length; i++) {
+
     }
   }, []);
 
@@ -161,17 +162,35 @@ function Dashboard() {
 
   return (
     <section>
-      
-      <TopBar />
-      <br /><br /><br /><br />
-      <Row className="row">
-        {/* <Col md={3} xs={12}>
-          <Paper className="padd15 fullheight left-panel" elevation={3} >
 
+      <TopBar />
+      <br /><br /><br />
+      <Row className="row">
+        <Col md={3} xs={12}>
+          <Paper style={{ marginRight: -20 }} className="padd15 fullheight left-panel" elevation={0} >
+          <h5><b>Select Products</b></h5>
+            <Select
+              isMulti
+              name="categories"
+              id="categories"
+              // onChange={e => handelChangeSelect(e)}
+              options={productOptions}
+              defaultValue={productOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            />
+            <br/>
+            <h5><b>Start Date</b></h5>
+            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} style={{width:'100%'}} />
+            <br/><br/>
+            <h5><b>End Date</b></h5>
+            <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} style={{width:'100%'}} />
+            <br/><br/>
+            <Button style={{ width: '100%' }}>SOLVE</Button>
           </Paper >
-        </Col> */}
-        <Col md={12} xs={12}>
-          <Paper className="padd15 fullheight" elevation={3} >
+        </Col>
+        <Col md={9} xs={12}>
+          <Paper className="padd15 fullheight" elevation={0} >
             <Chart
               width={'100%'}
               height={'400px'}
@@ -198,7 +217,7 @@ function Dashboard() {
                 vAxis: {
                   title: 'Sales',
                 },
-               
+
               }}
               rootProps={{ 'data-testid': '2' }}
             />

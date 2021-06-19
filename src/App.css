@@ -78,3 +78,6 @@ z-index: 1;
     overflow-y: scroll;
   }
 }
+.react-datepicker__input-container input{
+  width: 100% !important;
+}
