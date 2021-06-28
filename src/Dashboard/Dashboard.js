@@ -10,14 +10,27 @@ import 'leaflet/dist/leaflet.css';
 import DatePicker from "react-datepicker";
 import Switch from '@material-ui/core/Switch';
 import "react-datepicker/dist/react-datepicker.css";
-import Select from 'react-select'
+import { Select } from 'antd';
+import { Checkbox } from 'antd';
+import { Input } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
-
+import { Tabs } from 'antd';
+import 'antd/dist/antd.css';
+const { TabPane } = Tabs;
 function Dashboard() {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
   const [labels, setLabels] = React.useState([])
   const [dataSets, setDataSets] = React.useState([])
+  const [forecastUnit, setForecastUnit] = React.useState(null)
+  const { Option } = Select;
+
+
+  function handleChange(value) {
+    setForecastUnit(value)
+  }
+  let history = useHistory();
   const [data, setData] = React.useState([
     {
       "product": "type1",
@@ -140,6 +153,7 @@ function Dashboard() {
     }
   ])
   const [productOptions, setProductOptions] = React.useState([{ value: "product 1", label: "product 1" }, { value: "product 2", label: "product 2" }])
+  const [unitOptions, setUnitOptions] = React.useState([{ value: "Amount sold", label: "Amount sold" }, { value: "Revenue streams", label: "Revenue streams" }, { value: "Costs", label: "Costs" }])
   const data1 = {
     labels: labels,
     datasets: dataSets
@@ -174,21 +188,21 @@ function Dashboard() {
         }
         let sales = []
         let forecast = []
-        for(let j=0;j<data[i].data.length;j++){
-          if(data[i].data[j].forecast == "FALSE"){
+        for (let j = 0; j < data[i].data.length; j++) {
+          if (data[i].data[j].forecast == "FALSE") {
             sales.push(data[i].data[j].volume)
             forecast.push(null)
           }
-          else{
+          else {
             forecast.push(data[i].data[j].volume)
           }
         }
-        for (let x = 0; x<forecast.length;x++){
-          if(forecast[x]!=null){
-            forecast[x-1]=sales[sales.length-1]
+        for (let x = 0; x < forecast.length; x++) {
+          if (forecast[x] != null) {
+            forecast[x - 1] = sales[sales.length - 1]
             break
           }
-          
+
         }
         datasetlist.push(
           {
@@ -220,30 +234,182 @@ function Dashboard() {
   return (
     <section>
 
-      <TopBar />
+<TopBar history={history}/>
       <br /><br /><br />
       <Row className="row">
         <Col md={3} xs={12}>
           <Paper style={{ marginRight: -20 }} className="padd15 fullheight left-panel" elevation={0} >
-            {/* <h5><b>Select Products</b></h5>
-            <Select
-              isMulti
-              name="categories"
-              id="categories"
-              // onChange={e => handelChangeSelect(e)}
-              options={productOptions}
-              defaultValue={productOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            /> */}
-            <br />
-            <h5><b>Start Date</b></h5>
-            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} style={{ width: '100%' }} />
-            <br /><br />
-            <h5><b>End Date</b></h5>
-            <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} style={{ width: '100%' }} />
-            <br /><br />
-            <Button style={{ width: '100%' }}>SOLVE</Button>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Forecasting" key="1">
+                {/* <h5><b>Select Products</b></h5>
+                <Select
+                  isMulti
+                  name="categories"
+                  id="categories"
+                  // onChange={e => handelChangeSelect(e)}
+                  options={productOptions}
+                  defaultValue={productOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                /> */}
+                <br />
+                <h5><b>Start Date</b></h5>
+                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} style={{ width: '100%' }} />
+                <br /><br />
+                <h5><b>End Date</b></h5>
+                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} style={{ width: '100%' }} />
+                <br /><br />
+                <h5><b>Units</b></h5>
+                <Select onChange={handleChange} defaultValue="Amount sold" style={{ width: "100%" }}>
+                  <Option value="Amount sold">Amount sold</Option>
+                  <Option value="Revene streams">Revene streams</Option>
+                  <Option value="Costs">Costs</Option>
+                </Select>
+                <br /><br />
+                <Button style={{ width: '100%' }}>SOLVE</Button>
+                <br /> <br />
+                <Row>
+                  <Col xs={6}>
+                    <h5><b>Products:</b></h5>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
+                  </Col>
+                  <Col xs={6}>
+                    <h5><b>&nbsp;</b></h5>
+                    <Checkbox>Show monthly data</Checkbox><br />
+                    <Checkbox>Show plots together</Checkbox><br />
+                    <Checkbox>Show data trends</Checkbox><br />
+                    <Checkbox>Show bar chart</Checkbox>
+                  </Col>
+                  <Col xs={12}>
+                    <br />
+                    <h6><b>{forecastUnit}</b></h6>
+                    {
+                      forecastUnit == "Revene streams" &&
+                      <div>
+                        <Checkbox checked={true}>Total</Checkbox><br />
+                        <Checkbox>Professional</Checkbox><br />
+                        <Checkbox>Retail</Checkbox><br />
+                        <Checkbox>house manufacturer</Checkbox><br />
+                        <Checkbox>consumer</Checkbox><br />
+                        <Checkbox>export</Checkbox><br />
+                        <Checkbox>contractor</Checkbox><br />
+                        <Checkbox>infra</Checkbox><br />
+                        <Checkbox>expert</Checkbox><br />
+                        <Checkbox>Other</Checkbox><br />
+                      </div>
+                    }
+                    {
+                      forecastUnit == "Costs" &&
+                      <div>
+                        <Checkbox checked={true}>Total</Checkbox><br />
+                        <Checkbox>labor</Checkbox><br />
+                        <Checkbox>paper</Checkbox><br />
+                        <Checkbox>chemicals</Checkbox><br />
+                        <Checkbox>freight</Checkbox><br />
+                        <Checkbox>installation (yrittäjät)</Checkbox><br />
+                        <Checkbox>installation (oma asennus)</Checkbox><br />
+                        <Checkbox>installation (konttiautot)</Checkbox><br />
+                        <Checkbox>Other</Checkbox><br />
+                      </div>
+                    }
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tab="Sales/Costs" key="2">
+
+                <h5><b>Units</b></h5>
+                <Select onChange={handleChange} defaultValue="Amount sold" style={{ width: "100%" }}>
+                  <Option value="Amount sold">Amount sold</Option>
+                  <Option value="Revene streams">Revene streams</Option>
+                  <Option value="Costs">Costs</Option>
+                </Select>
+                <br /><br />
+                <Button style={{ width: '100%' }}>SOLVE</Button>
+                <br /> <br />
+                <Row>
+                  <Col xs={6}>
+                    <h5><b>Products:</b></h5>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
+                  </Col>
+                  <Col xs={6}>
+                    <h5><b>&nbsp;</b></h5>
+                    <Checkbox>Show plots together</Checkbox><br />
+                    <Checkbox>Show bar chart</Checkbox>
+                  </Col>
+                  <Col xs={12}>
+                    <br />
+                    <h6><b>{forecastUnit}</b></h6>
+                    {
+                      forecastUnit == "Revene streams" &&
+                      <div>
+                        <Checkbox checked={true}>Total</Checkbox><br />
+                        <Checkbox>Professional</Checkbox><br />
+                        <Checkbox>Retail</Checkbox><br />
+                        <Checkbox>house manufacturer</Checkbox><br />
+                        <Checkbox>consumer</Checkbox><br />
+                        <Checkbox>export</Checkbox><br />
+                        <Checkbox>contractor</Checkbox><br />
+                        <Checkbox>infra</Checkbox><br />
+                        <Checkbox>expert</Checkbox><br />
+                        <Checkbox>Other</Checkbox><br />
+                      </div>
+                    }
+                    {
+                      forecastUnit == "Costs" &&
+                      <div>
+                        <Checkbox checked={true}>Total</Checkbox><br />
+                        <Checkbox>labor</Checkbox><br />
+                        <Checkbox>paper</Checkbox><br />
+                        <Checkbox>chemicals</Checkbox><br />
+                        <Checkbox>freight</Checkbox><br />
+                        <Checkbox>installation (yrittäjät)</Checkbox><br />
+                        <Checkbox>installation (oma asennus)</Checkbox><br />
+                        <Checkbox>installation (konttiautot)</Checkbox><br />
+                        <Checkbox>Other</Checkbox><br />
+                      </div>
+                    }
+                  </Col>
+                </Row>
+              </TabPane>
+              <TabPane tab="Goals" key="3">
+                <Row>
+                  <Col xs={6}>
+                  <h6><b>Year: 2021</b></h6>
+                  </Col>
+                  <Col xs={6}>
+                  <h6><b>Week: 22</b></h6>
+                  </Col>
+                </Row>
+                <br/>
+                <h5><b>Number of rows</b></h5>
+                <Input placeholder="Number of rows" />
+                <br /><br />
+                <Button style={{ width: '100%' }}>SOLVE</Button>
+                <br /><br />
+                <Row>
+                  <Col xs={6}>
+                    <h5><b>Products:</b></h5>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
+                  </Col>
+                </Row>
+              </TabPane>
+            </Tabs>
+
           </Paper >
         </Col>
         <Col md={9} xs={12}>

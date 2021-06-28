@@ -5,8 +5,25 @@
     box-shadow: rgb(0 0 0 / 6%) 0px 1px 2px;
     width: 100%;
     top: 0;
-    z-index: 9;
+    z-index: 1199;
+}
+.username{
+    background: #3c5179;
+    color: white;
+    text-align: center;
+    padding: 17px;
+}
+.username h4{
+    color: white;
 }
 .MuiPaper-root{
     min-width:300px !important
+}
+.drawer-footer{
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
 }

@@ -33,6 +33,7 @@
   }
   .fullheight{
     height: 100vh;
+    overflow-y: scroll;
   }
   .previous{
     position: relative;
