@@ -379,10 +379,9 @@ function Dashboard() {
             activeTab && activeTab === '1' &&
             <Paper className="padd15 fullheight" elevation={0}>
               {
-                Dummy.map(item => {
+                dummyData.map(item => {
                   return <Plot key={item.product}
                       showChart={annualSales}
-                      // data={data1}
                       item={item}
                       options={options}
                     >
