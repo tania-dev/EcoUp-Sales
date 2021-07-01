@@ -1,6 +1,6 @@
 
 import './Dashboard.css';
-import React from 'react';
+import {useState, useEffect} from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import Paper from '@material-ui/core/Paper';
 import Chart from "react-google-charts";
@@ -23,13 +23,13 @@ import Dummy from './Plot/DummyData'
 
 const { TabPane } = Tabs;
 
-
 function Dashboard() {
-  const [startDate, setStartDate] = React.useState(new Date());
-  const [endDate, setEndDate] = React.useState(new Date());
-  const [labels, setLabels] = React.useState([])
-  const [dataSets, setDataSets] = React.useState([])
-  const [forecastUnit, setForecastUnit] = React.useState(null)
+  const [dummyData, setDummyData] = useState([])
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [labels, setLabels] = useState([])
+  const [dataSets, setDataSets] = useState([])
+  const [forecastUnit, setForecastUnit] = useState(null)
   const { Option } = Select;
 
   function handleChange(value) {
@@ -38,9 +38,9 @@ function Dashboard() {
 
   let history = useHistory();
 
-  const [data, setData] = React.useState(predefinedData);
-  const [productOptions, setProductOptions] = React.useState([{ value: "product 1", label: "product 1" }, { value: "product 2", label: "product 2" }])
-  const [unitOptions, setUnitOptions] = React.useState([{ value: "Amount sold", label: "Amount sold" }, { value: "Revenue streams", label: "Revenue streams" }, { value: "Costs", label: "Costs" }]);
+  const [data, setData] = useState(predefinedData);
+  const [productOptions, setProductOptions] = useState([{ value: "product 1", label: "product 1" }, { value: "product 2", label: "product 2" }])
+  const [unitOptions, setUnitOptions] = useState([{ value: "Amount sold", label: "Amount sold" }, { value: "Revenue streams", label: "Revenue streams" }, { value: "Costs", label: "Costs" }]);
 
   const data1 = {
     labels: labels,
@@ -51,15 +51,22 @@ function Dashboard() {
     scales: {
       yAxes: [
         {
+          stacked: true,
           ticks: {
             beginAtZero: true,
           },
         },
       ],
+      xAxes: [
+        {
+          stacked: true,
+        },
+      ],
     },
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setDummyData(Dummy)
     if (data && data[0] && data[0].data && data[0].data.length > 0) {
       var labelList = []
       for (let i = 0; i < data[0].data.length; i++) {
@@ -117,7 +124,7 @@ function Dashboard() {
   }, []);
 
 
-  const [annualSales, setAnnuals] = React.useState(
+  const [annualSales, setAnnuals] = useState(
     {
       py: true,
       ai: true,
@@ -128,7 +135,7 @@ function Dashboard() {
     }
   );
 
-  const [activeTab, setTab] = React.useState('1');
+  const [activeTab, setTab] = useState('1');
 
   return (
     <section>

@@ -57,7 +57,7 @@ function Plot(props) {
                 label: data[i].product + " forecast",
                 data: forecast,
                 fill: false,
-                backgroundColor: color,
+                backgroundColor: '#ccc',
                 borderColor: color,
                 borderDash: [10, 5]
             }
@@ -68,12 +68,44 @@ function Plot(props) {
     }, []);
 
     const annualSales = props.showChart;
+    const {item} = props
+    console.log(precessedData)
 
     return (
         <>
-            { true &&
+            { item.product === 'py' && annualSales.py &&
                 <div className="annual-sales-plot">
-                    <p>Product ({props.item.product})</p>
+                    <p>Product ({item.product})</p>
+                    <Bar data={precessedData} options={props.options}/>
+                </div>
+            }
+            { item.product === 'ia' && annualSales.ai &&
+                <div className="annual-sales-plot">
+                    <p>Product ({item.product})</p>
+                    <Bar data={precessedData} options={props.options}/>
+                </div>
+            }
+            { item.product === 'asf.kuitu' && annualSales.asf &&
+                <div className="annual-sales-plot">
+                    <p>Product ({item.product})</p>
+                    <Bar data={precessedData} options={props.options}/>
+                </div>
+            }
+            { item.product === 'levy' && annualSales.levy &&
+                <div className="annual-sales-plot">
+                    <p>Product ({item.product})</p>
+                    <Bar data={precessedData} options={props.options}/>
+                </div>
+            }
+            { item.product === 'akusto' && annualSales.akusto &&
+                <div className="annual-sales-plot">
+                    <p>Product ({item.product})</p>
+                    <Bar data={precessedData} options={props.options}/>
+                </div>
+            }
+            { item.product === 'py kontit' && annualSales.kontit &&
+                <div className="annual-sales-plot">
+                    <p>Product ({item.product})</p>
                     <Bar data={precessedData} options={props.options}/>
                 </div>
             }
