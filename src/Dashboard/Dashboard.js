@@ -17,7 +17,13 @@ import { useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
+import predefinedData from './Data';
+import Plot from './Plot/Plot';
+import Dummy from './Plot/DummyData'
+
 const { TabPane } = Tabs;
+
+
 function Dashboard() {
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
@@ -26,504 +32,16 @@ function Dashboard() {
   const [forecastUnit, setForecastUnit] = React.useState(null)
   const { Option } = Select;
 
-
   function handleChange(value) {
     setForecastUnit(value)
   }
+
   let history = useHistory();
-  const [data, setData] = React.useState([
-    {
-      "product": "py",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "lavat",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 16051,
-            "date": "2014-01-01",
-            "year": 2014, "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 15457,
-            "date": "2015-01-01",
-            "year": 2015,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 19258,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 19725,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 21423,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 18598,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 17647,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 18749,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 18694,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 18895,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    },
-    {
-      "product": "ia",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "lavat, sis puru",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 6386,
-            "date": "2014-01-01",
-            "year": 2014,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 6288,
-            "date": "2015-01-01",
-            "year": 2015, "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 5311,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4542,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4746,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4441,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4560,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4719,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4474,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 4317,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    },
-    {
-      "product": "asf.kuitu",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "kg",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 0,
-            "date": "2014-01-01",
-            "year": 2014,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2015-01-01",
-            "year": 2015,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 1682787,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 1376397,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 1806239,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 1608628,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 1460439,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 1407414,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    },
-    {
-      "product": "levy",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "lavat",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 25057,
-            "date": "2014-01-01",
-            "year": 2014,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 27154,
-            "date": "2015-01-01",
-            "year": 2015,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 28388,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 29966,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 32709,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 32157,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 37859,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 43590,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 44810,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 47272,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    },
-    {
-      "product": "akusto",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "lavat",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 0,
-            "date": "2014-01-01",
-            "year": 2014,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2015-01-01",
-            "year": 2015,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4871,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 4623,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 4636,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    },
-    {
-      "product": "py kontit",
-      "tab": "Annual Sales",
-      "unit": "Amount",
-      "subcategory": "None",
-      "trend": false,
-      "axis_units": "kg",
-      "chart_type": "bar",
-      "data":
-        [
-          {
-            "volume": 0,
-            "date": "2014-01-01",
-            "year": 2014, "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2015-01-01",
-            "year": 2015,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2016-01-01",
-            "year": 2016,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2017-01-01",
-            "year": 2017,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2018-01-01",
-            "year": 2018,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2019-01-01",
-            "year": 2019,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 0,
-            "date": "2020-01-01",
-            "year": 2020,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 457947,
-            "date": "2021-01-01",
-            "year": 2021,
-            "week": 1,
-            "forecast": false
-          },
-          {
-            "volume": 441527,
-            "date": "2022-01-01",
-            "year": 2022,
-            "week": 1,
-            "forecast": true
-          },
-          {
-            "volume": 443027,
-            "date": "2023-01-01",
-            "year": 2023,
-            "week": 1,
-            "forecast": true
-          }
-        ]
-    }
-  ])
+
+  const [data, setData] = React.useState(predefinedData);
   const [productOptions, setProductOptions] = React.useState([{ value: "product 1", label: "product 1" }, { value: "product 2", label: "product 2" }])
-  const [unitOptions, setUnitOptions] = React.useState([{ value: "Amount sold", label: "Amount sold" }, { value: "Revenue streams", label: "Revenue streams" }, { value: "Costs", label: "Costs" }])
+  const [unitOptions, setUnitOptions] = React.useState([{ value: "Amount sold", label: "Amount sold" }, { value: "Revenue streams", label: "Revenue streams" }, { value: "Costs", label: "Costs" }]);
+
   const data1 = {
     labels: labels,
     datasets: dataSets
@@ -540,15 +58,15 @@ function Dashboard() {
       ],
     },
   };
-  React.useEffect(() => {
 
+  React.useEffect(() => {
     if (data && data[0] && data[0].data && data[0].data.length > 0) {
       var labelList = []
       for (let i = 0; i < data[0].data.length; i++) {
         labelList.push(data[0].data[i].date)
       }
       setLabels(labelList)
-      console.log(labels)
+
       var datasetlist = []
       for (let i = 0; i < data.length; i++) {
         var letters = '0123456789ABCDEF';
@@ -559,7 +77,7 @@ function Dashboard() {
         let sales = []
         let forecast = []
         for (let j = 0; j < data[i].data.length; j++) {
-          if (data[i].data[j].forecast == false) {
+          if (data[i].data[j].forecast == "FALSE") {
             sales.push(data[i].data[j].volume)
             forecast.push(null)
           }
@@ -595,38 +113,64 @@ function Dashboard() {
         )
       }
       setDataSets(datasetlist)
-      console.log(datasetlist)
     }
   }, []);
 
 
+  const [annualSales, setAnnuals] = React.useState(
+    {
+      py: true,
+      ai: true,
+      asf: true,
+      levy: true,
+      akusto: true,
+      kontit: true
+    }
+  );
+
+  const [activeTab, setTab] = React.useState('1');
 
   return (
     <section>
-
-      <TopBar history={history} />
+      <TopBar history={history}/>
       <br /><br /><br />
       <Row className="row">
-        <Col md={4} xs={12}>
+        <Col md={3} xs={12}>
           <Paper style={{ marginRight: -20 }} className="padd15 fullheight left-panel" elevation={0} >
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="1" activeKey={activeTab} onChange={activeKey => setTab(activeKey)}>
+
               <TabPane tab="Annual Sales" key="1">
-                <br />
-                <Button style={{ width: '100%' }}>SOLVE</Button>
-                <br /> <br />
                 <Row>
                   <Col xs={6}>
                     <h5><b>Products:</b></h5>
-                    <Checkbox defaultChecked={true}>Py</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Ai</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Asf.kuito</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Levy</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Akusto</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Py kontit</Checkbox>
+                    <Checkbox onChange={e => setAnnuals({...annualSales, py: !annualSales.py })}
+                      checked={annualSales.py}>Py</Checkbox><br />
+                    <Checkbox onChange={e => setAnnuals({...annualSales, ai: !annualSales.ai })}
+                      checked={annualSales.ai}>Ai</Checkbox><br/>
+                    <Checkbox onChange={e => setAnnuals({...annualSales, asf: !annualSales.asf })}
+                      checked={annualSales.asf}>Asf.kuito</Checkbox><br />
+                    <Checkbox onChange={e => setAnnuals({...annualSales, levy: !annualSales.levy })}
+                      checked={annualSales.levy}>Levy</Checkbox><br />
+                    <Checkbox onChange={e => setAnnuals({...annualSales, akusto: !annualSales.akusto})}
+                      checked={annualSales.akusto}>Akusto</Checkbox><br />
+                    <Checkbox onChange={e => setAnnuals({...annualSales, kontit: !annualSales.kontit})}
+                      checked={annualSales.kontit}>Py kontit</Checkbox>
                   </Col>
                 </Row>
               </TabPane>
+
               <TabPane tab="Forecasting" key="2">
+                {/* <h5><b>Select Products</b></h5>
+                <Select
+                  isMulti
+                  name="categories"
+                  id="categories"
+                  // onChange={e => handelChangeSelect(e)}
+                  options={productOptions}
+                  defaultValue={productOptions}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                /> */}
                 <br />
                 <h5><b>Start Date</b></h5>
                 <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} style={{ width: '100%' }} />
@@ -646,12 +190,12 @@ function Dashboard() {
                 <Row>
                   <Col xs={6}>
                     <h5><b>Products:</b></h5>
-                    <Checkbox defaultChecked={true}>Py</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Ai</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Asf.kuito</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Levy</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Akusto</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Py kontit</Checkbox>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
                   </Col>
                   <Col xs={6}>
                     <h5><b>&nbsp;</b></h5>
@@ -666,7 +210,7 @@ function Dashboard() {
                     {
                       forecastUnit == "Revene streams" &&
                       <div>
-                        <Checkbox defaultChecked={true}>Total</Checkbox><br />
+                        <Checkbox checked={true}>Total</Checkbox><br />
                         <Checkbox>Professional</Checkbox><br />
                         <Checkbox>Retail</Checkbox><br />
                         <Checkbox>house manufacturer</Checkbox><br />
@@ -681,7 +225,7 @@ function Dashboard() {
                     {
                       forecastUnit == "Costs" &&
                       <div>
-                        <Checkbox defaultChecked={true}>Total</Checkbox><br />
+                        <Checkbox checked={true}>Total</Checkbox><br />
                         <Checkbox>labor</Checkbox><br />
                         <Checkbox>paper</Checkbox><br />
                         <Checkbox>chemicals</Checkbox><br />
@@ -695,8 +239,8 @@ function Dashboard() {
                   </Col>
                 </Row>
               </TabPane>
-              <TabPane tab="Sales/Costs" key="3">
 
+              <TabPane tab="Sales/Costs" key="3">
                 <h5><b>Units</b></h5>
                 <Select onChange={handleChange} defaultValue="Amount sold" style={{ width: "100%" }}>
                   <Option value="Amount sold">Amount sold</Option>
@@ -709,12 +253,12 @@ function Dashboard() {
                 <Row>
                   <Col xs={6}>
                     <h5><b>Products:</b></h5>
-                    <Checkbox defaultChecked={true}>Py</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Ai</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Asf.kuito</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Levy</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Akusto</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Py kontit</Checkbox>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
                   </Col>
                   <Col xs={6}>
                     <h5><b>&nbsp;</b></h5>
@@ -727,7 +271,7 @@ function Dashboard() {
                     {
                       forecastUnit == "Revene streams" &&
                       <div>
-                        <Checkbox defaultChecked={true}>Total</Checkbox><br />
+                        <Checkbox checked={true}>Total</Checkbox><br />
                         <Checkbox>Professional</Checkbox><br />
                         <Checkbox>Retail</Checkbox><br />
                         <Checkbox>house manufacturer</Checkbox><br />
@@ -742,7 +286,7 @@ function Dashboard() {
                     {
                       forecastUnit == "Costs" &&
                       <div>
-                        <Checkbox defaultChecked={true}>Total</Checkbox><br />
+                        <Checkbox checked={true}>Total</Checkbox><br />
                         <Checkbox>labor</Checkbox><br />
                         <Checkbox>paper</Checkbox><br />
                         <Checkbox>chemicals</Checkbox><br />
@@ -756,30 +300,31 @@ function Dashboard() {
                   </Col>
                 </Row>
               </TabPane>
+
               <TabPane tab="Goals" key="4">
                 <Row>
                   <Col xs={6}>
-                    <h6><b>Year: 2021</b></h6>
+                  <h6><b>Year: 2021</b></h6>
                   </Col>
                   <Col xs={6}>
-                    <h6><b>Week: 22</b></h6>
+                  <h6><b>Week: 22</b></h6>
                   </Col>
                 </Row>
-                <br />
+                <br/>
                 <h5><b>Number of rows</b></h5>
-                <Input placeholder="Number of rows" defaultValue="5" />
+                <Input placeholder="Number of rows" />
                 <br /><br />
                 <Button style={{ width: '100%' }}>SOLVE</Button>
                 <br /><br />
                 <Row>
                   <Col xs={6}>
                     <h5><b>Products:</b></h5>
-                    <Checkbox defaultChecked={true}>Py</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Ai</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Asf.kuito</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Levy</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Akusto</Checkbox><br />
-                    <Checkbox defaultChecked={true}>Py kontit</Checkbox>
+                    <Checkbox>Py</Checkbox><br />
+                    <Checkbox>Ai</Checkbox><br />
+                    <Checkbox>Asf.kuito</Checkbox><br />
+                    <Checkbox>Levy</Checkbox><br />
+                    <Checkbox>Akusto</Checkbox><br />
+                    <Checkbox>Py kontit</Checkbox>
                   </Col>
                 </Row>
               </TabPane>
@@ -787,10 +332,58 @@ function Dashboard() {
 
           </Paper >
         </Col>
-        <Col md={8} xs={12}>
-          <Paper className="padd15 fullheight" elevation={0} >
-            <Line data={data1} options={options} />
-          </Paper >
+        <Col md={9} xs={12}>
+          {activeTab && activeTab !== '1' &&
+            <Paper className="padd15 fullheight" elevation={0} >
+              {/* <Chart
+                width={'100%'}
+                height={'400px'}
+                chartType="LineChart"
+                loader={<div>Loading Chart</div>}
+                data={[
+                  ['x', 'type 1', 'type 2'],
+                  ["2021-06-01", 100, 200],
+                  ["2021-07-01", 140, 100],
+                  ["2021-08-01", 200, 270],
+                  ["2021-09-01", 400, 300],
+                  ["2021-10-01", 250, 210],
+                  ["2021-11-01", 350, 90],
+                  ["2021-12-01", 90, 200],
+                  ["2022-01-01", 0, 40],
+                  ["2022-02-01", 120, 210],
+                  ["2022-03-01", 180, 100],
+                  ["2022-04-01", 200, 220],
+                ]}
+                options={{
+                  hAxis: {
+                    title: 'Date',
+                  },
+                  vAxis: {
+                    title: 'Sales',
+                  },
+
+                }}
+                rootProps={{ 'data-testid': '2' }}
+              /> */}
+              <Line data={data1} options={options} />
+            </Paper >
+          }
+          {
+            activeTab && activeTab === '1' &&
+            <Paper className="padd15 fullheight" elevation={0}>
+              {
+                Dummy.map(item => {
+                  return <Plot key={item.product}
+                      showChart={annualSales}
+                      // data={data1}
+                      item={item}
+                      options={options}
+                    >
+                    </Plot>
+                })
+              }
+            </Paper>
+          }
         </Col>
       </Row>
     </section>
