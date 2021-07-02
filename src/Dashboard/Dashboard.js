@@ -14,7 +14,7 @@ import { Select } from 'antd';
 import { Checkbox } from 'antd';
 import { Input } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 import { Tabs } from 'antd';
 import 'antd/dist/antd.css';
 const { TabPane } = Tabs;
@@ -24,6 +24,7 @@ function Dashboard() {
   const [labels, setLabels] = React.useState([])
   const [dataSets, setDataSets] = React.useState([])
   const [forecastUnit, setForecastUnit] = React.useState(null)
+  const [barData, setBarData] = React.useState([])
   const { Option } = Select;
 
 
@@ -541,7 +542,6 @@ function Dashboard() {
     },
   };
   React.useEffect(() => {
-
     if (data && data[0] && data[0].data && data[0].data.length > 0) {
       var labelList = []
       for (let i = 0; i < data[0].data.length; i++) {
@@ -550,11 +550,16 @@ function Dashboard() {
       setLabels(labelList)
       console.log(labels)
       var datasetlist = []
+      var bartemp = []
       for (let i = 0; i < data.length; i++) {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var k = 0; k < 6; k++) {
           color += letters[Math.floor(Math.random() * 16)];
+        }
+        var color2 = '#';
+        for (var k = 0; k < 6; k++) {
+          color2 += letters[Math.floor(Math.random() * 16)];
         }
         let sales = []
         let forecast = []
@@ -569,10 +574,9 @@ function Dashboard() {
         }
         for (let x = 0; x < forecast.length; x++) {
           if (forecast[x] != null) {
-            forecast[x - 1] = sales[sales.length - 1]
+            // forecast[x - 1] = sales[sales.length - 1]
             break
           }
-
         }
         datasetlist.push(
           {
@@ -593,9 +597,26 @@ function Dashboard() {
             borderDash: [10, 5]
           }
         )
+        bartemp.push({
+          dataset: [{
+            label: data[i].product,
+            data: sales,
+            fill: false,
+            backgroundColor: color,
+            borderColor: color,
+          }, {
+            label: data[i].product + " forecast",
+            data: forecast,
+            fill: false,
+            backgroundColor: color2,
+            borderColor: color2,
+            borderDash: [10, 5]
+          }],
+          product: data[i].product,
+        })
       }
+      setBarData(bartemp)
       setDataSets(datasetlist)
-      console.log(datasetlist)
     }
   }, []);
 
@@ -789,7 +810,12 @@ function Dashboard() {
         </Col>
         <Col md={8} xs={12}>
           <Paper className="padd15 fullheight" elevation={0} >
-            <Line data={data1} options={options} />
+            {barData && barData.length > 0 &&
+              barData.map((item, key) => (
+                <Bar data={{ labels: labels, datasets: item.dataset }} options={options} />
+              ))
+            }
+
           </Paper >
         </Col>
       </Row>
